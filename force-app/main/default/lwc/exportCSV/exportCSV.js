@@ -16,11 +16,11 @@ export default class ExportCSV extends LightningElement {
 @track error;
 @track data;
 @track columns = cols;
-@track checked = false;
+@track checkedtoggle = false;
 
 //Toggle checkbox to export with record-id or without record-id
 changeToggle(event){
-    this.checked = !this.checked;    
+    this.checkedtoggle = !this.checked;    
 }
 
 // this constructor invoke when component is created.
@@ -50,7 +50,8 @@ getAccountList().then(result => {
 }
 
 // this method validates the data and creates the csv file to download
-downloadCSVFile() {   
+downloadCSVFile() { 
+var ischecked= this.checkedtoggle;  
 let rowEnd = '\n';
 let csvString = '';
 // this set elminates the duplicates if have any duplicate keys
@@ -58,8 +59,8 @@ let rowData = new Set();
 
 // getting keys from data
 this.data.forEach(function (record) {
-    Object.keys(record).forEach(function (key) {
-        if(this.checked){
+    Object.keys(record).forEach(function (key) {        
+        if(ischecked==true){
             rowData.add(key);
         }
         else{
